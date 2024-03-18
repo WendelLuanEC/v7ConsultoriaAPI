@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 const express = require('express');
 const { fetchChatGPTResponse } = require('./chat');
 const { config } = require('dotenv');
-const { requestPocketbase } = require('./pocketbase');
-const pocketbase = await Promise.resolve().then(() => __importStar(require('./pocketbase.es.mjs')));
+
+
 config();
 const app = express();
 const PORT = process.env.PORT || 8080;

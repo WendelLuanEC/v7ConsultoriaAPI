@@ -1,7 +1,6 @@
 const express = require('express');
 const { fetchChatGPTResponse } = require('./chat');
 const { config } = require('dotenv');
-const { requestPocketbase } = require('./pocketbase');
 
 config();
 
