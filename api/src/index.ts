@@ -1,14 +1,14 @@
 const express = require('express');
 const { fetchChatGPTResponse } = require('./chat');
 const { config } = require('dotenv');
-
+const cors = require('cors')
 config();
 
 const app = express();
 const PORT = process.env.PORT || 8090;
 
 app.use(express.json());
-
+app.use(cors())
 app.get('/', async (req : any, res: any) => {
     res.send({ response: "ola" });
 });
