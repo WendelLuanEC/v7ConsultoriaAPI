@@ -30,7 +30,6 @@ app.post("/ask", async (req, res) => {
 });
 app.post("/askgemini", async (req, res) => {
     const answer = req.body.answer;
-    console.log("ola");
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }

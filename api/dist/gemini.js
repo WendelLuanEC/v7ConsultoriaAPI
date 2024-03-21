@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchGeminiResponse = void 0;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 // Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI("AIzaSyCgIbrifr7ybZVqIIvAP-pQ9ZPJ8MyOAxE");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 async function fetchGeminiResponse(question) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
