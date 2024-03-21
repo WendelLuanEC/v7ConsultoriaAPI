@@ -1,5 +1,6 @@
 const express = require('express');
 const { fetchChatGPTResponse } = require('./chat');
+import { fetchGeminiResponse } from "./gemini";
 const { config } = require('dotenv');
 const cors = require('cors')
 config();
@@ -30,6 +31,20 @@ app.post("/ask", async (req: any, res: any) => {
     }
 });
 
+app.post("/askgemini", async (req: any, res: any) => {
+    const answer: string = req.body.answer;
+    if (!answer) {
+        return res.status(400).send({ error: "Pergunta não fornecida." });
+    }
+
+    try {
+        const geminiResponse = await fetchGeminiResponse(answer);
+        // Retorna a resposta para o usuário
+        res.send({ geminiResponse });
+    } catch (error) {
+        res.status(500).send({ error: "Erro ao processar sua pergunta." });
+    }
+});
 
 // Iniciar o servidor
 app.listen(PORT, () => {

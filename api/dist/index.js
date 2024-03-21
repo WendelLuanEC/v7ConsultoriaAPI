@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const { fetchChatGPTResponse } = require('./chat');
+const gemini_1 = require("./gemini");
 const { config } = require('dotenv');
 const cors = require('cors');
 config();
@@ -21,6 +23,21 @@ app.post("/ask", async (req, res) => {
         const chatResponse = await fetchChatGPTResponse(answer);
         // Retorna a resposta para o usuário
         res.send({ chatResponse });
+    }
+    catch (error) {
+        res.status(500).send({ error: "Erro ao processar sua pergunta." });
+    }
+});
+app.post("/askgemini", async (req, res) => {
+    const answer = req.body.answer;
+    console.log("ola");
+    if (!answer) {
+        return res.status(400).send({ error: "Pergunta não fornecida." });
+    }
+    try {
+        const geminiResponse = await (0, gemini_1.fetchGeminiResponse)(answer);
+        // Retorna a resposta para o usuário
+        res.send({ geminiResponse });
     }
     catch (error) {
         res.status(500).send({ error: "Erro ao processar sua pergunta." });

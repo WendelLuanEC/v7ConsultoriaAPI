@@ -1,6 +1,6 @@
 import openai from './openai';
 
-interface Params {
+interface GPTParams {
     messages: { role: string; content: string }[];
     model: string;
 }
@@ -15,7 +15,7 @@ interface ChatResponse {
 
 export async function fetchChatGPTResponse(instrucao: string): Promise<string> {
     try {
-        const params: Params = {
+        const params: GPTParams = {
             messages: [{ role: 'user', content: `${instrucao}` }],
             model: 'gpt-3.5-turbo',
         };
