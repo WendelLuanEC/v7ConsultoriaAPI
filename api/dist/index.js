@@ -16,10 +16,11 @@ app.get('/', async (req, res) => {
 // Criando a rota /ask
 app.post("/ask", async (req, res) => {
     const answer = req.body.answer;
+    const frontend_secret = req.body.frontend_secret;
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }
-    if (process.env.FRONTEND_SECRET === '33445566778112') {
+    if (frontend_secret === process.env.FRONTEND_SECRET) {
         try {
             const chatResponse = await fetchChatGPTResponse(answer);
             // Retorna a resposta para o usuário
@@ -29,13 +30,17 @@ app.post("/ask", async (req, res) => {
             res.status(500).send({ error: "Erro ao processar sua pergunta." });
         }
     }
+    else {
+        res.status(500).send({ error: "Requisição não autenticada." });
+    }
 });
 app.post("/askgemini", async (req, res) => {
     const answer = req.body.answer;
+    const frontend_secret = req.body.frontend_secret;
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }
-    if (process.env.FRONTEND_SECRET === '33445566778112') {
+    if (frontend_secret === process.env.FRONTEND_SECRET) {
         try {
             const geminiResponse = await (0, gemini_1.fetchGeminiResponse)(answer);
             // Retorna a resposta para o usuário
@@ -44,6 +49,9 @@ app.post("/askgemini", async (req, res) => {
         catch (error) {
             res.status(500).send({ error: "Erro ao processar sua pergunta." });
         }
+    }
+    else {
+        res.status(500).send({ error: "Requisição não autenticada." });
     }
 });
 // Iniciar o servidor
