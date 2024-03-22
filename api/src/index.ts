@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 8090;
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.get('/', async (req : any, res: any) => {
     res.send({ response: "ola" });
 });
@@ -18,6 +18,7 @@ app.get('/', async (req : any, res: any) => {
 app.post("/ask", async (req: any, res: any) => {
     const answer: string = req.body.answer;
     const frontend_secret= req.body.frontend_secret;
+    console.log("Subiu");
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }
