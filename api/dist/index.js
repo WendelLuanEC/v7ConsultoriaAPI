@@ -17,22 +17,21 @@ app.get('/', async (req, res) => {
 app.post("/ask", async (req, res) => {
     const answer = req.body.answer;
     const frontend_secret = req.body.frontend_secret;
+    console.log("Subiu");
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }
-    if (frontend_secret === process.env.FRONTEND_SECRET) {
-        try {
-            const chatResponse = await fetchChatGPTResponse(answer);
-            // Retorna a resposta para o usuário
-            res.send({ chatResponse });
-        }
-        catch (error) {
-            res.status(500).send({ error: "Erro ao processar sua pergunta." });
-        }
+    // if(frontend_secret === process.env.FRONTEND_SECRET){
+    try {
+        const chatResponse = await fetchChatGPTResponse(answer);
+        // Retorna a resposta para o usuário
+        res.send({ chatResponse });
     }
-    else {
-        res.status(500).send({ error: "Requisição não autenticada." });
-    }
+    catch (error) {
+        res.status(500).send({ error: "Erro ao processar sua pergunta." });
+    } //}else{
+    // res.status(500). send({error: "Requisição não autenticada."});
+    // }
 });
 app.post("/askgemini", async (req, res) => {
     const answer = req.body.answer;
@@ -40,19 +39,17 @@ app.post("/askgemini", async (req, res) => {
     if (!answer) {
         return res.status(400).send({ error: "Pergunta não fornecida." });
     }
-    if (frontend_secret === process.env.FRONTEND_SECRET) {
-        try {
-            const geminiResponse = await (0, gemini_1.fetchGeminiResponse)(answer);
-            // Retorna a resposta para o usuário
-            res.send({ geminiResponse });
-        }
-        catch (error) {
-            res.status(500).send({ error: "Erro ao processar sua pergunta." });
-        }
+    //if(frontend_secret === process.env.FRONTEND_SECRET){
+    try {
+        const geminiResponse = await (0, gemini_1.fetchGeminiResponse)(answer);
+        // Retorna a resposta para o usuário
+        res.send({ geminiResponse });
     }
-    else {
-        res.status(500).send({ error: "Requisição não autenticada." });
-    }
+    catch (error) {
+        res.status(500).send({ error: "Erro ao processar sua pergunta." });
+    } //}else{
+    //res.status(500). send({error: "Requisição não autenticada."});
+    //}
 });
 // Iniciar o servidor
 app.listen(PORT, () => {
